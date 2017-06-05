@@ -1,0 +1,2 @@
+export const UPDATE_STATES = 'UPDATE_STATES';
+export const UPDATE_LETTERS = 'UPDATE_LETTERS';
