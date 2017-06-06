@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateStates } from '../actions';
 
 // A BoardBlock's state can be one of five things
   // board-block-revealed-letter: Its value is not undefined (i.e. it has a letter) and is displaying the letter.
@@ -12,26 +14,42 @@ import React, { Component } from 'react';
   // board-block-green-placeholder
     // Completely Green Block, normal border, value is always undefined.
 
-export default class BoardBlock extends Component {
+class BoardBlock extends Component {
   constructor(props) {
     super(props);
     this.renderLetter = this.renderLetter.bind(this);
+    this.revealLetter = this.revealLetter.bind(this);
   }
 
   render() {
+    console.log('this.props.position:', this.props.position);
     return (
-      <div className={this.props.className}>{this.renderLetter()}</div>
+      <div className={this.props.className} onClick={this.revealLetter}>{this.renderLetter()}</div>
     );
   }
   renderLetter() {
-    const { className } = this.props;
+    const { className, letter } = this.props;
     if (className.includes("board-block-active-letter") || className.includes("board-block-active-punctuation")) {
-      return this.props.letter;
+      return letter
     }
-    return "";
+    else return ""
+  }
+  revealLetter() {
+    console.log(this.props);
+    if (this.props.className.includes("board-block-pending-letter")) {
+      const { position, blockStates, updateStates } = this.props;
+      var newStates = blockStates.slice();
+      newStates[position[0]][position[1]] = "board-block-active-letter";
+      updateStates(newStates);
+    }
   }
 }
 
+function mapStateToProps(state) {
+  return { blockStates: state.board.blockStates }
+}
+
+export default connect(mapStateToProps, { updateStates })(BoardBlock);
 // TODO
 // makeGuess
 // onClick for each button

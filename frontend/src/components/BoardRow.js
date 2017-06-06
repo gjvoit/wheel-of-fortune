@@ -17,8 +17,8 @@ export default class BoardRow extends Component {
   }
 
   renderRows() {
-    console.log('letters:', this.props.letters);
-    console.log('blocks:', this.props.blockStates);
+    // console.log('letters:', this.props.letters);
+    // console.log('blocks:', this.props.blockStates);
     var blocks = [];
     if (this.props.boundingRow) {
       blocks.push(<BoardBlock className="board-block board-block-placeholder" />);
@@ -30,16 +30,16 @@ export default class BoardRow extends Component {
           blocks.push(<BoardBlock className="board-block" />);
           break;
         case "board-block-pending-letter":
-          blocks.push(<BoardBlock className="board-block board-block-pending-letter" />);
+          blocks.push(<BoardBlock position={[this.props.row,i]} className="board-block board-block-pending-letter" />);
           break;
         case "board-block-active-letter":
-          blocks.push(<BoardBlock letter={this.props.letters[this.props.row][i]} className="board-block board-block-active-letter" />);
+          blocks.push(<BoardBlock position={[this.props.row,i]} letter={this.props.letters[this.props.row][i]} className="board-block board-block-active-letter" />);
           break;
         case "board-block-active-punctuation":
-          blocks.push(<BoardBlock letter={this.props.letters[this.props.row][i]} className="board-block board-block-active-letter" />);
+          blocks.push(<BoardBlock position={[this.props.row,i]} letter={this.props.letters[this.props.row][i]} className="board-block board-block-active-letter" />);
           break;
         default:
-          blocks.push(<BoardBlock letter={this.props.letters[this.props.row][i]} className="board-block board-block-unguessed-letter" />);
+          blocks.push(<BoardBlock position={[this.props.row,i]} letter={this.props.letters[this.props.row][i]} className="board-block board-block-unguessed-letter" />);
           break;
       }
     }
