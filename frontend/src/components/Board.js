@@ -27,6 +27,7 @@ class Board extends Component {
     this.clearPuzzle = this.clearPuzzle.bind(this);
     this.updateGuess = this.updateGuess.bind(this);
     this.makeGuess = this.makeGuess.bind(this);
+    this.revealPuzzle = this.revealPuzzle.bind(this);
   }
 
   render() {
@@ -49,6 +50,7 @@ class Board extends Component {
         <button onClick={this.clearPuzzle}> Clear Current Puzzle </button> <br/>
         <input value={this.state.guess} onChange={this.updateGuess} />
         <button onClick={this.makeGuess}> Make Guess </button>
+        <button onClick={this.revealPuzzle}> Reveal Puzzle </button>
       </div>
     );
   }
@@ -86,6 +88,18 @@ class Board extends Component {
       phrase: '',
       guess: ''
     })
+  }
+
+  revealPuzzle() {
+    var newStates = this.props.blockStates.slice();
+    for (var i =0; i < newStates.length; i++) {
+      for (var j=0; j < newStates[i].length; j++) {
+        if (this.props.blockStates[i][j] !== undefined) {
+          if (this.props.blockStates[i][j].includes("board-block-unguessed-letter") || this.props.blockStates[i][j].includes("board-block-pending-letter")) newStates[i][j] = "board-block-active-letter";
+        }
+      }
+    }
+    this.props.updateStates(newStates);
   }
 
   // Simple event handler for a managed form input.

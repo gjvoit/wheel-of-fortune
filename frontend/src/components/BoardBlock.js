@@ -22,7 +22,6 @@ class BoardBlock extends Component {
   }
 
   render() {
-    console.log('this.props.position:', this.props.position);
     return (
       <div className={this.props.className} onClick={this.revealLetter}>{this.renderLetter()}</div>
     );
@@ -35,7 +34,6 @@ class BoardBlock extends Component {
     else return ""
   }
   revealLetter() {
-    console.log(this.props);
     if (this.props.className.includes("board-block-pending-letter")) {
       const { position, blockStates, updateStates } = this.props;
       var newStates = blockStates.slice();
